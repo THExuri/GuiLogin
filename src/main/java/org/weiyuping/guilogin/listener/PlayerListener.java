@@ -1,6 +1,6 @@
-package listener;
+package org.weiyuping.guilogin.listener;
 
-import logingui.LoginGui;
+import org.weiyuping.guilogin.logingui.LoginGui;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

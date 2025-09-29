@@ -1,7 +1,7 @@
 package org.weiyuping.guilogin;
 
-import listener.GuiListener;
-import listener.PlayerListener;
+import org.weiyuping.guilogin.listener.GuiListener;
+import org.weiyuping.guilogin.listener.PlayerListener;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -40,9 +40,9 @@ public final class GuiLogin extends JavaPlugin {
         ConfigurationSection section = dataConfig.getConfigurationSection("playerPasswords");
         if (section != null) {
             for (String playerName : section.getKeys(false)) {
-                String password = section.getString(playerName);
-                if (password != null) {
-                    GuiListener.playerPasswords.put(playerName, password);
+                String hashedPassword = section.getString(playerName);
+                if (hashedPassword != null) {
+                    GuiListener.playerPasswords.put(playerName, hashedPassword);
                 }
             }
         }

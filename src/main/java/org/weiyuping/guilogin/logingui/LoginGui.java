@@ -1,4 +1,4 @@
-package logingui;
+package org.weiyuping.guilogin.logingui;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.weiyuping.guilogin.GuiLogin;
 
-import static listener.GuiListener.playerPasswords;
+import static org.weiyuping.guilogin.listener.GuiListener.playerPasswords;
 
 
 public class LoginGui {
