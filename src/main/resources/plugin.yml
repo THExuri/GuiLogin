@@ -1,4 +1,4 @@
 name: GuiLogin
-version: '1.2'
+version: '${version}'
 main: org.weiyuping.guilogin.GuiLogin
 api-version: '1.18'
