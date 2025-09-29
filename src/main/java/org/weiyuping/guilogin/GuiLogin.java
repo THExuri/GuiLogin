@@ -40,7 +40,7 @@ public final class GuiLogin extends JavaPlugin {
         if (section != null) {
             for (String playerName : section.getKeys(false)) {
                 String hashedPassword = section.getString(playerName);
-                if (hashedPassword != null) {
+                if (hashedPassword != null && !hashedPassword.isEmpty()) {
                     GuiListener.playerPasswords.put(playerName, hashedPassword);
                 }
             }
@@ -50,9 +50,16 @@ public final class GuiLogin extends JavaPlugin {
     public void savePlayerData(String playerName, String hashedPassword) {
         try {
             dataConfig.set("playerPasswords." + playerName, hashedPassword);
+
+            File dataFolder = getDataFolder();
+            if (!dataFolder.exists()) {
+                dataFolder.mkdirs();
+            }
+
             File dataFile = new File(getDataFolder(), "passworddata.yml");
             dataConfig.save(dataFile);
         } catch (IOException e) {
+            getLogger().severe("无法保存玩家 " + playerName + " 的密码数据: " + e.getMessage());
             e.printStackTrace();
         }
     }

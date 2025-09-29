@@ -1,5 +1,6 @@
 package org.weiyuping.guilogin.listener;
 
+import org.weiyuping.guilogin.GuiLogin;
 import org.weiyuping.guilogin.logingui.LoginGui;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -68,6 +69,8 @@ public class GuiListener implements Listener {
                     String password = currentInput.toString();
                     String hashedPassword = YamlFileUtils.hashPassword(password);
                     playerPasswords.put(player.getName(), hashedPassword);
+                    GuiLogin plugin = GuiLogin.getPlugin(GuiLogin.class);
+                    plugin.savePlayerData(player.getName(), hashedPassword);
                     player.sendMessage(ChatColor.GREEN + "注册成功");
                     player.playSound(player.getLocation(), org.bukkit.Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
                     currentInput.clear();
