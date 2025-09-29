@@ -33,7 +33,6 @@ public final class GuiLogin extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        savePlayerData();
     }
 
     public void loadPlayerPasswords() {
@@ -48,16 +47,13 @@ public final class GuiLogin extends JavaPlugin {
         }
     }
 
-    private void savePlayerData() {
+    public void savePlayerData(String playerName, String hashedPassword) {
         try {
-            dataConfig.set("playerPasswords", null);
-            for (Map.Entry<String, String> entry : GuiListener.playerPasswords.entrySet()) {
-                dataConfig.set("playerPasswords." + entry.getKey(), entry.getValue());
-            }
-                File dataFile = new File(getDataFolder(), "passworddata.yml");
-                dataConfig.save(dataFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            dataConfig.set("playerPasswords." + playerName, hashedPassword);
+            File dataFile = new File(getDataFolder(), "passworddata.yml");
+            dataConfig.save(dataFile);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+}
