@@ -10,6 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.weiyuping.guilogin.GuiLogin;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static org.weiyuping.guilogin.listener.GuiListener.playerPasswords;
 
 
@@ -19,21 +23,43 @@ public class LoginGui {
         if (plugin != null) {
             //获取延迟时间
             int delayTime = plugin.getConfig().getInt("delayTime");
+            //随机数字盘槽位
+            boolean randomLogin = plugin.getConfig().getBoolean("random-login");
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 String title = isRegistered(player.getName()) ? "登录界面" : ChatColor.AQUA + "注册界面";
                 //为玩家生成一个GUI登录界面
                 Inventory inventory = Bukkit.createInventory(player, 54, Component.text(title));
                 //设置index(数字盘)槽位物品,数量及名称
                 ItemStack numberPane = new ItemStack(Material.valueOf("WHITE_STAINED_GLASS_PANE"));
-                int amount = 1;
                 int[] index = {21, 22, 23, 30, 31, 32, 39, 40, 41, 49};
-                for (int j : index) {
-                    ItemMeta numberPaneMeta = numberPane.getItemMeta();
-                    numberPaneMeta.displayName(Component.text(ChatColor.WHITE + String.valueOf(amount)));
-                    numberPane.setItemMeta(numberPaneMeta);
-                    inventory.setItem(j, numberPane);
-                    numberPane.setAmount(amount + 1);
-                    amount++;
+                //随机数字盘
+                if (randomLogin) {
+                    List<String> randomNumberPane = new ArrayList<>();
+                    for (int i = 1; i <= 10; i++) {
+                        randomNumberPane.add(String.valueOf(i));
+                    }
+                    Collections.shuffle(randomNumberPane);
+                    for (int i = 0; i < 10; i++) {
+                        ItemStack numberItem = numberPane.clone();
+                        //获取随机数字
+                        int number = Integer.parseInt(randomNumberPane.get(i));
+                        numberItem.setAmount(number);
+                        ItemMeta numberPaneMeta = numberItem.getItemMeta();
+                        numberPaneMeta.displayName(Component.text(ChatColor.WHITE + String.valueOf(number)));
+                        numberItem.setItemMeta(numberPaneMeta);
+                        inventory.setItem(index[i], numberItem);
+                    }
+                } else {
+                    //顺序数字盘
+                    int amount = 1;
+                    for (int j : index) {
+                        ItemMeta numberPaneMeta = numberPane.getItemMeta();
+                        numberPaneMeta.displayName(Component.text(ChatColor.WHITE + String.valueOf(amount)));
+                        numberPane.setItemMeta(numberPaneMeta);
+                        inventory.setItem(j, numberPane);
+                        numberPane.setAmount(amount + 1);
+                        amount++;
+                    }
                 }
                 //设置其他填充槽位物品
                 ItemStack paddingPane = new ItemStack(createNamedItem(Material.valueOf("GRAY_STAINED_GLASS_PANE"), " "));
@@ -67,6 +93,7 @@ public class LoginGui {
         item.setItemMeta(meta);
         return item;
     }
+
     private static boolean isRegistered(String playerName) {
         return playerPasswords.containsKey(playerName);
     }

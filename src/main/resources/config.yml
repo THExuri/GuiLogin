@@ -1,2 +1,4 @@
 #延迟打开登录GUI 20tick为1秒
 delay-time: 20
+#随机登录数字版，默认为false
+random-login: false

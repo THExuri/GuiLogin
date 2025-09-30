@@ -1,21 +1,25 @@
 package org.weiyuping.guilogin;
 
-import org.weiyuping.guilogin.listener.GuiListener;
-import org.weiyuping.guilogin.listener.PlayerListener;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.weiyuping.guilogin.listener.GuiListener;
+import org.weiyuping.guilogin.listener.PlayerListener;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 public final class GuiLogin extends JavaPlugin {
     private FileConfiguration dataConfig;
+    private static GuiLogin instance;
 
+    public static GuiLogin getInstance() {
+        return instance;
+    }
     @Override
     public void onEnable() {
+        instance = this;
         // Plugin startup logic
         saveDefaultConfig();
         File dataFile = new File(getDataFolder(), "passworddata.yml");
