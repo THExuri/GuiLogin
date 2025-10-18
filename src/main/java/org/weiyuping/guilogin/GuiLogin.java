@@ -1,70 +1,31 @@
 package org.weiyuping.guilogin;
 
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.weiyuping.guilogin.listener.GuiListener;
-import org.weiyuping.guilogin.listener.PlayerListener;
-
-import java.io.File;
-import java.io.IOException;
+import org.weiyuping.guilogin.listener.*;
 
 public final class GuiLogin extends JavaPlugin {
-    private FileConfiguration dataConfig;
     private static GuiLogin instance;
 
     public static GuiLogin getInstance() {
         return instance;
     }
+
     @Override
     public void onEnable() {
         instance = this;
-        // Plugin startup logic
-        saveDefaultConfig();
-        File dataFile = new File(getDataFolder(), "passworddata.yml");
-        if (!dataFile.exists()) {
-            getDataFolder().mkdirs();
-            saveResource("passworddata.yml", false);
-        }
-        dataConfig = YamlConfiguration.loadConfiguration(dataFile);
-        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-        getServer().getPluginManager().registerEvents(new GuiListener(), this);
-
-        loadPlayerPasswords();
+        this.getLogger().info(ChatColor.AQUA +"GuiLogin 启动成功");
+        getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new ItemListener(), this);
+        getServer().getPluginManager().registerEvents(new NumberPaneClickListener(), this);
+        getServer().getPluginManager().registerEvents(new OnLoginListener(), this);
+        getServer().getPluginManager().registerEvents(new OnRegisterListener(), this);
+        getServer().getPluginManager().registerEvents(new LoginListener(), this);
+        getServer().getPluginManager().registerEvents(new CustomItemClickListener(), this);
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
-    }
-
-    public void loadPlayerPasswords() {
-        ConfigurationSection section = dataConfig.getConfigurationSection("playerPasswords");
-        if (section != null) {
-            for (String playerName : section.getKeys(false)) {
-                String hashedPassword = section.getString(playerName);
-                if (hashedPassword != null && !hashedPassword.isEmpty()) {
-                    GuiListener.playerPasswords.put(playerName, hashedPassword);
-                }
-            }
-        }
-    }
-
-    public void savePlayerData(String playerName, String hashedPassword) {
-        try {
-            dataConfig.set("playerPasswords." + playerName, hashedPassword);
-
-            File dataFolder = getDataFolder();
-            if (!dataFolder.exists()) {
-                dataFolder.mkdirs();
-            }
-
-            File dataFile = new File(getDataFolder(), "passworddata.yml");
-            dataConfig.save(dataFile);
-        } catch (IOException e) {
-            getLogger().severe("无法保存玩家 " + playerName + " 的密码数据: " + e.getMessage());
-            e.printStackTrace();
-        }
+        this.getLogger().info(ChatColor.AQUA +"GuiLogin 已停止");
     }
 }
