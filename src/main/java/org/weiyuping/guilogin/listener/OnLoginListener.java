@@ -9,12 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.weiyuping.guilogin.data.PlayerData;
 import org.weiyuping.guilogin.gui.Title;
 import org.weiyuping.guilogin.utils.MD5Utils;
 
-import static org.weiyuping.guilogin.data.PlayerData.getPlayerPassword;
-import static org.weiyuping.guilogin.data.PlayerData.setPlayerPassword;
+import static org.weiyuping.guilogin.data.PlayerData.*;
 import static org.weiyuping.guilogin.utils.CleanUtils.cleanTheFirstLine;
 
 
@@ -49,7 +47,7 @@ public class OnLoginListener implements Listener {
         return stringBuilder.toString();
     }
     private void encryptExistPassword(Player player, String password) {
-        if (PlayerData.getPlayerPassword(player).split("").length < 10) {
+        if (getPlayerPassword(player).split("").length < 10) {
             setPlayerPassword(player, password);
         }
     }
@@ -60,7 +58,7 @@ public class OnLoginListener implements Listener {
             player.sendMessage(ChatColor.RED + "密码错误！");
             return false;
         } else {
-            PlayerData.setLogin(player, true);
+            setLogin(player, true);
             player.sendMessage(ChatColor.GREEN + "登录成功！");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 10, 1);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
