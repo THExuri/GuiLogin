@@ -28,13 +28,14 @@ public class Item {
                     break;
                 }
             }
-            if (!isNumberSlots && i != 48 && i != 50) {
+            if (!isNumberSlots && i != 48 && i != 50 && i != 45) {
                 inventory.setItem(i, extraPane);
             }
         }
         inventory.setItem(50, customItem(Material.valueOf("LIME_STAINED_GLASS_PANE"), ChatColor.BLUE + "确认"));
         inventory.setItem(48, customItem(Material.valueOf("RED_STAINED_GLASS_PANE"), ChatColor.YELLOW + "清空"));
         inventory.setItem(53, customItem(Material.valueOf("ORANGE_STAINED_GLASS_PANE"), ChatColor.RED + "退出"));
+        inventory.setItem(45, customItem(Material.valueOf("BLUE_STAINED_GLASS_PANE"), ChatColor.GOLD + "忘记密码"));
     }
 
     public static ItemStack customItem(Material material, String name) {

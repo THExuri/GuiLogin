@@ -17,6 +17,7 @@ public class CustomItemClickListener implements Listener {
     @EventHandler
     public void onCustomItemClickListener(InventoryClickEvent event) {
 
+
         ItemStack clicked = event.getCurrentItem();
         Inventory currentInventory = event.getClickedInventory();
         Player player = (Player) event.getWhoClicked();
@@ -28,6 +29,13 @@ public class CustomItemClickListener implements Listener {
                 } else if (clicked.getType() == Material.ORANGE_STAINED_GLASS_PANE) {
                     player.closeInventory();
                     player.kickPlayer(ChatColor.AQUA + "请重新登录！");
+                }
+            }
+        }
+        if (event.getInventory().getHolder() instanceof Title.RegisterHolder) {
+            if (clicked != null) {
+                if (clicked.getType() == Material.BLUE_STAINED_GLASS_PANE) {
+                    player.sendMessage(ChatColor.RED + "你尚未注册！");
                 }
             }
         }
