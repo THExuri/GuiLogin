@@ -1,4 +1,7 @@
 name: GuiLogin
-version: '1.2.2'
+version: '1.2.3'
 main: org.weiyuping.guilogin.GuiLogin
 api-version: '1.18'
+commands:
+  guilogin:
+    description: 'Reset Player Password'
