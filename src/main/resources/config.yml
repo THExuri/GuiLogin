@@ -1,0 +1,14 @@
+#是否启用同一ip账号数量限制
+enablePlayerLimitIP: true
+#同一个ip可以注册的账号数量
+playerLimitIP: 1
+#是否开启定点登录
+enableLoginPoint: false
+#定点登录
+loginPoint:
+  world: World
+  x:
+  y:
+  z:
+#是否开启找回密码
+enableFindPassword: false
