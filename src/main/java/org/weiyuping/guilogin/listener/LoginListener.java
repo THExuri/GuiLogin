@@ -10,11 +10,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.weiyuping.guilogin.GuiLogin;
 import org.weiyuping.guilogin.gui.Title;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import static org.weiyuping.guilogin.data.PlayerData.isLogin;
 import static org.weiyuping.guilogin.data.PlayerData.isRegistered;
 
 
 public class LoginListener implements Listener {
+    public static Map<UUID, Boolean> playerIsValidating = new HashMap<>();
 
     long delay = 1L;
 
@@ -27,7 +32,6 @@ public class LoginListener implements Listener {
                 if (!isRegistered(player)) {
                     player.openInventory(new Title.RegisterHolder().getInventory());
                 } else {
-                    // 密码存在 还需要判断是否已登录，不然会无限打开登录GUI
                     if (!isLogin(player)) {
                         player.openInventory(new Title.LoginHolder().getInventory());
                     }
@@ -39,13 +43,21 @@ public class LoginListener implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
-
-        if (!isRegistered(player)) {
-            event.getPlayer().openInventory(new Title.RegisterHolder().getInventory());
-        } else {
-            if (!isLogin(player)) {
-                event.getPlayer().openInventory(new Title.LoginHolder().getInventory());
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (isLogin(player)) {
+                    return;
+                }
+                boolean isValidating = playerIsValidating.getOrDefault(player.getUniqueId(), false);
+                if (!isValidating) {
+                    if (!isRegistered(player)) {
+                        player.openInventory(new Title.RegisterHolder().getInventory());
+                    } else {
+                        player.openInventory(new Title.LoginHolder().getInventory());
+                    }
+                }
             }
-        }
+        }.runTaskLater(GuiLogin.getInstance(), delay);
     }
 }
