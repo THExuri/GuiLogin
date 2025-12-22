@@ -6,3 +6,6 @@ loginPoint:
   x:
   y:
   z:
+#密码板
+numberPaneColor: WHITE
+extraPaneColor: BLACK

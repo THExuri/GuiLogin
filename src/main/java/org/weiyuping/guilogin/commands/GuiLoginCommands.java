@@ -16,6 +16,7 @@ import java.util.List;
 
 
 public  class GuiLoginCommands implements CommandExecutor, TabCompleter {
+
     private static final List<String> COMMANDS = List.of("set");
 
     @Override
