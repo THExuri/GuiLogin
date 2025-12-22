@@ -21,15 +21,15 @@ public  class GuiLoginCommands implements CommandExecutor, TabCompleter {
     @Override
     @ParametersAreNonnullByDefault
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length < 1) {
+        if (args.length == 0) {
             sender.sendMessage("用法: /guilogin <set> [player] [password]");
             return false;
         }
-        if (args[0].equalsIgnoreCase("set")) {
-            String playerName = args[1];
-            String password = args[2];
-            if (!PlayerData.playerPasswordExist(playerName)) {
-                sender.sendMessage("玩家" + playerName + "不存在");
+        Player player = Bukkit.getPlayer(args[1]);
+        String password = PlayerData.getPlayerPassword(args[2]);
+        if (player != null) {
+            if (!PlayerData.playerPasswordExist(String.valueOf(player))) {
+                sender.sendMessage("玩家" + player + "不存在");
                 return false;
             }
             if (password.length() < 6) {
@@ -40,8 +40,8 @@ public  class GuiLoginCommands implements CommandExecutor, TabCompleter {
                 sender.sendMessage("密码中不能含有0");
                 return false;
             }
-            PlayerData.setPlayerPassword(playerName, password);
-            sender.sendMessage("成功为玩家" + playerName + "设置新密码");
+            PlayerData.setPlayerPassword(player, password);
+            sender.sendMessage("成功为玩家" + player + "设置新密码");
             return true;
         }
         return false;

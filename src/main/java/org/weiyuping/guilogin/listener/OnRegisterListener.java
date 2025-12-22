@@ -15,8 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.weiyuping.guilogin.data.PlayerData.setLogin;
-import static org.weiyuping.guilogin.data.PlayerData.setPlayerPassword;
+import static org.weiyuping.guilogin.data.PlayerData.*;
 import static org.weiyuping.guilogin.utils.CleanUtils.cleanTheFirstLine;
 
 
@@ -30,12 +29,17 @@ public class OnRegisterListener implements Listener {
         ItemStack clicked = event.getCurrentItem();
         Inventory currentInventory = event.getClickedInventory();
         Player player = (Player) event.getWhoClicked();
+
         if (clicked != null) {
             if (event.getInventory().getHolder() instanceof Title.RegisterHolder && clicked.getType() == Material.LIME_STAINED_GLASS_PANE) {
                 String password = "null";
                 try {
                     password = linePassword(currentInventory);
                 } catch (Exception ignored) {
+                }
+                if (password.equals("null") || password.isEmpty()) {
+                    player.sendMessage(ChatColor.RED + "密码不能为空！");
+                    return;
                 }
                 if (tempPlayerPassword.get(player.getUniqueId()) == null) {
                     tempPlayerPassword.put(player.getUniqueId(), password);
