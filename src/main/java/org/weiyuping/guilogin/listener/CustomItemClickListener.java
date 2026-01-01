@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.weiyuping.guilogin.gui.Title;
+import org.weiyuping.guilogin.language.I18;
 
 import static org.weiyuping.guilogin.utils.CleanUtils.cleanTheFirstLine;
 
@@ -28,14 +29,14 @@ public class CustomItemClickListener implements Listener {
                     cleanTheFirstLine(currentInventory);
                 } else if (clicked.getType() == Material.ORANGE_STAINED_GLASS_PANE) {
                     player.closeInventory();
-                    player.kickPlayer(ChatColor.AQUA + "请重新登录！");
+                    player.kickPlayer(ChatColor.AQUA + I18.get("relogin_prompt"));
                 }
             }
         }
         if (event.getInventory().getHolder() instanceof Title.RegisterHolder) {
             if (clicked != null) {
                 if (clicked.getType() == Material.BLUE_STAINED_GLASS_PANE) {
-                    player.sendMessage(ChatColor.RED + "你尚未注册！");
+                    player.sendMessage(ChatColor.RED + I18.get("player_not_registered"));
                 }
             }
         }

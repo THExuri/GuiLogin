@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.weiyuping.guilogin.gui.Title;
+import org.weiyuping.guilogin.language.I18;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,21 +39,21 @@ public class OnRegisterListener implements Listener {
                 } catch (Exception ignored) {
                 }
                 if (password.equals("null") || password.isEmpty()) {
-                    player.sendMessage(ChatColor.RED + "密码不能为空！");
+                    player.sendMessage(ChatColor.RED + I18.get("register_empty"));
                     return;
                 }
                 if (tempPlayerPassword.get(player.getUniqueId()) == null) {
                     tempPlayerPassword.put(player.getUniqueId(), password);
                     cleanTheFirstLine(currentInventory);
-                    player.sendMessage(ChatColor.LIGHT_PURPLE + "请再次输入密码");
+                    player.sendMessage(ChatColor.LIGHT_PURPLE + I18.get("password_reinput"));
                 } else {
                     if (!(password.equals(tempPlayerPassword.get(player.getUniqueId())))) {
-                        player.sendMessage(ChatColor.RED + "密码不一致！");
+                        player.sendMessage(ChatColor.RED + I18.get("register_mismatch"));
                         cleanTheFirstLine(currentInventory);
                     } else {
                         setLogin(player, true);
                         setPlayerPassword(player, password);
-                        player.sendMessage(ChatColor.GREEN + "注册成功！");
+                        player.sendMessage(ChatColor.GREEN + I18.get("register_success"));
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 10, 1);
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
                         player.closeInventory();

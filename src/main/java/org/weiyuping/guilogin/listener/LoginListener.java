@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.weiyuping.guilogin.GuiLogin;
 import org.weiyuping.guilogin.gui.Title;
+import org.weiyuping.guilogin.language.I18;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,7 +88,7 @@ public class LoginListener implements Listener {
             config.set("loginPoint.z", location.getZ());
 
             GuiLogin.getInstance().saveConfig();
-            GuiLogin.getInstance().getLogger().info("已自动设置登录点为世界出生点: " + location);
+            GuiLogin.getInstance().getLogger().info(I18.get("auto_login_point"));
         }
     }
     public LoginListener() {

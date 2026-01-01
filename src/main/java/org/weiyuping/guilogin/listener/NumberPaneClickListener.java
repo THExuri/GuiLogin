@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.weiyuping.guilogin.gui.Title;
-
+import org.weiyuping.guilogin.language.I18;
 
 
 public class NumberPaneClickListener implements Listener {
@@ -30,7 +30,7 @@ public class NumberPaneClickListener implements Listener {
                         currentInventory.setItem(slot, clicked);
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 10, 1);
                     } else {
-                        player.sendMessage("不可以超过9个数字！");
+                        player.sendMessage(I18.get("password_toolong"));
                     }
                 }
             }

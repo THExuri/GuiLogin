@@ -7,6 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.weiyuping.guilogin.GuiLogin;
+import org.weiyuping.guilogin.language.I18;
 
 public class Item {
     public static void guiItem(Inventory inventory) {
@@ -35,9 +36,9 @@ public class Item {
                 inventory.setItem(i, extraPane);
             }
         }
-        inventory.setItem(50, customItem(Material.valueOf("LIME_STAINED_GLASS_PANE"), ChatColor.BLUE + "确认"));
-        inventory.setItem(48, customItem(Material.valueOf("RED_STAINED_GLASS_PANE"), ChatColor.YELLOW + "清空"));
-        inventory.setItem(53, customItem(Material.valueOf("ORANGE_STAINED_GLASS_PANE"), ChatColor.RED + "退出"));
+        inventory.setItem(50, customItem(Material.valueOf("LIME_STAINED_GLASS_PANE"), ChatColor.BLUE + I18.get("button_confirm")));
+        inventory.setItem(48, customItem(Material.valueOf("RED_STAINED_GLASS_PANE"), ChatColor.YELLOW + I18.get("button_clear")));
+        inventory.setItem(53, customItem(Material.valueOf("ORANGE_STAINED_GLASS_PANE"), ChatColor.RED + I18.get("button_quit")));
     }
 
     public static ItemStack customItem(Material material, String name) {

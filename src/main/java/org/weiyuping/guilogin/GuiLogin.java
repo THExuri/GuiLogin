@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.weiyuping.guilogin.commands.GuiLoginCommands;
+import org.weiyuping.guilogin.language.I18;
 import org.weiyuping.guilogin.listener.*;
 
 public final class GuiLogin extends JavaPlugin {
@@ -16,7 +17,8 @@ public final class GuiLogin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        this.getLogger().info(ChatColor.AQUA + "GuiLogin 启动成功");
+        I18.loadLanguage();
+        this.getLogger().info(ChatColor.AQUA + I18.get("plugin_enabled"));
         saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getServer().getPluginManager().registerEvents(new ItemListener(), this);
@@ -34,6 +36,6 @@ public final class GuiLogin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.getLogger().info(ChatColor.AQUA + "GuiLogin 已停止");
+        this.getLogger().info(ChatColor.AQUA + I18.get("plugin_disabled"));
     }
 }

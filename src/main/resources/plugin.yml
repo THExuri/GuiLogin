@@ -4,4 +4,4 @@ main: org.weiyuping.guilogin.GuiLogin
 api-version: '1.18'
 commands:
   guilogin:
-    description: 'Reset Player Password'
+    description: 登录GUI

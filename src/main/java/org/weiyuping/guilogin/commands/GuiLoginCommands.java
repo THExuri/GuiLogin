@@ -9,6 +9,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.weiyuping.guilogin.data.PlayerData;
+import org.weiyuping.guilogin.language.I18;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -23,26 +24,26 @@ public  class GuiLoginCommands implements CommandExecutor, TabCompleter {
     @ParametersAreNonnullByDefault
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage("用法: /guilogin <set> [player] [password]");
-            return false;
+            sender.sendMessage(I18.get("command_usage"));
+            return true;
         }
         Player player = Bukkit.getPlayer(args[1]);
         String password = PlayerData.getPlayerPassword(args[2]);
         if (player != null) {
             if (!PlayerData.playerPasswordExist(String.valueOf(player))) {
-                sender.sendMessage("玩家" + player + "不存在");
+                sender.sendMessage(I18.get("player_not_exist"));
                 return false;
             }
             if (password.length() < 6) {
-                sender.sendMessage("密码长度不能少于6个字符");
+                sender.sendMessage(I18.get("password_too_short"));
                 return false;
             }
             if (password.contains("0")) {
-                sender.sendMessage("密码中不能含有0");
+                sender.sendMessage(I18.get("password_no_zero"));
                 return false;
             }
             PlayerData.setPlayerPassword(player, password);
-            sender.sendMessage("成功为玩家" + player + "设置新密码");
+            sender.sendMessage(I18.get("password_set_success"));
             return true;
         }
         return false;

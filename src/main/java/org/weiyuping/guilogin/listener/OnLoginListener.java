@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.weiyuping.guilogin.gui.Title;
+import org.weiyuping.guilogin.language.I18;
 import org.weiyuping.guilogin.utils.MD5Utils;
 
 import static org.weiyuping.guilogin.data.PlayerData.*;
@@ -55,11 +56,11 @@ public class OnLoginListener implements Listener {
         encryptExistPassword(player, getPlayerPassword(player));
         password = MD5Utils.encrypt(password, player.getName());
         if (!password.equals(getPlayerPassword(player))) {
-            player.sendMessage(ChatColor.RED + "密码错误！");
+            player.sendMessage(ChatColor.RED + I18.get("password_incorrect"));
             return false;
         } else {
             setLogin(player, true);
-            player.sendMessage(ChatColor.GREEN + "登录成功！");
+            player.sendMessage(ChatColor.GREEN + I18.get("login_success"));
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 10, 1);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
             player.closeInventory();

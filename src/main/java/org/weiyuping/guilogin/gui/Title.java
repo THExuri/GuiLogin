@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
+import org.weiyuping.guilogin.language.I18;
 
 import static org.weiyuping.guilogin.gui.Item.guiItem;
 
@@ -23,17 +24,17 @@ public class Title {
         }
     }
 
-    //注册Gui
+    //注册GUI
     public static class RegisterHolder extends GuiHolder {
         public RegisterHolder() {
-            super(ChatColor.AQUA + "注册界面");
+            super(ChatColor.AQUA + I18.get("title_register"));
         }
     }
 
-    //登录Gui
+    //登录GUI
     public static class LoginHolder extends GuiHolder {
         public LoginHolder() {
-            super("登录界面");
+            super(I18.get("title_login"));
         }
     }
 }

@@ -1,3 +1,5 @@
+#语言
+language: en_US
 #是否开启定点登录
 enableLoginPoint: false
 #定点登录
